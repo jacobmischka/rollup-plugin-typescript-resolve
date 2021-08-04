@@ -1,4 +1,4 @@
-import { join } from 'path';
+import { isAbsolute, join } from 'path';
 import { Plugin } from 'rollup';
 import { CompilerOptions, findConfigFile, nodeModuleNameResolver, parseConfigFileTextToJson, sys } from 'typescript';
 
@@ -29,12 +29,12 @@ export const typescriptPaths = ({
 				return null;
 			}
 
-			const jsFileName = join(
-				outDir,
-				preserveExtensions ? resolvedFileName : resolvedFileName.replace(/\.tsx?$/i, '.js'),
-			);
+			const fileIsAbsolute = isAbsolute(resolvedFileName);
 
-			let resolved = absolute ? sys.resolvePath(jsFileName) : jsFileName;
+			const filename = fileIsAbsolute
+				? resolvedFileName
+				: join(outDir, preserveExtensions ? resolvedFileName : resolvedFileName.replace(/\.tsx?$/i, '.js'));
+			let resolved = absolute && !fileIsAbsolute ? sys.resolvePath(filename) : filename;
 
 			if (transform) {
 				resolved = transform(resolved);
