@@ -6,22 +6,14 @@ export const typescriptPaths = ({
 	tsConfigPath = findConfigFile('./', sys.fileExists),
 	absolute = true,
 	transform,
-	preserveExtensions = false,
+	preserveExtensions = true,
 }: Options = {}): Plugin => {
 	const { compilerOptions, outDir } = getTsConfig(tsConfigPath);
 
 	return {
 		name: 'resolve-typescript-paths',
 		resolveId: (importee: string, importer?: string) => {
-			if (typeof importer === 'undefined' || importee.startsWith('\0') || !compilerOptions.paths) {
-				return null;
-			}
-
-			const hasMatchingPath = Object.keys(compilerOptions.paths).some((path) =>
-				new RegExp(path.replace('*', '\\w*')).test(importee),
-			);
-
-			if (!hasMatchingPath) {
+			if (typeof importer === 'undefined' || importee.startsWith('\0')) {
 				return null;
 			}
 

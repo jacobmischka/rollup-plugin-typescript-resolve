@@ -1,3 +1,19 @@
+# rollup-plugin-typescript-resolve
+
+Fork of
+[`rollup-plugin-typescript-paths`](https://github.com/simonhaenisch/rollup-plugin-typescript-paths) with a few small changes:
+
+1. Checks involving `paths` are removed, meaning all imports will be resolved
+   with typescript's resolution algorithm
+2. `preserveExtensions` option defaults to `true`
+
+I created this mainly so that I could specify `.js(x)` extensions for
+TypeScript files when using Vite.
+
+Original README below:
+
+---
+
 # rollup-plugin-typescript-paths
 
 [![Build Status](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Fsimonhaenisch%2Frollup-plugin-typescript-paths%2Fbadge&style=flat)](https://actions-badge.atrox.dev/simonhaenisch/rollup-plugin-typescript-paths/goto)
