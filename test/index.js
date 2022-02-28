@@ -18,7 +18,10 @@ const pluginDontPreserveExtensions = typescriptPaths({
 });
 
 try {
+	// skips if a matching path alias isn't found
 	strictEqual(plugin.resolveId('@asdf', ''), null);
+
+	// skips if importee is a virtual module
 	strictEqual(plugin.resolveId('\0@foobar', ''), null);
 	strictEqual(plugin.resolveId('@foobar', ''), join(__dirname, 'foo', 'bar.ts'));
 	strictEqual(plugin.resolveId('@foobar-react', ''), join(__dirname, 'foo', 'bar-react.tsx'));
@@ -27,6 +30,7 @@ try {
 
 	strictEqual(pluginNonAbs.resolveId('@foobar', ''), join('test', 'foo', 'bar.ts'));
 
+	// applies function from `transform` option
 	strictEqual(pluginTransform.resolveId('@foobar', ''), join(__dirname, 'foo', 'bar.cjs.js'));
 
 	strictEqual(pluginDontPreserveExtensions.resolveId('@foobar', ''), join(__dirname, 'foo', 'bar.js'));

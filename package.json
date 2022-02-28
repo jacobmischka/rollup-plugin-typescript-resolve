@@ -4,6 +4,9 @@
   "description": "Rollup Plugin to resolve imports using TypeScript resolution algorithm",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "test": "npm run prepare && node test",
     "preversion": "npm test",
